@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Output } from "@angular/core";
+import { Component, EventEmitter, Output } from '@angular/core';
+
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-user-create',
@@ -8,10 +10,10 @@ import { Component, EventEmitter, Output } from "@angular/core";
 export class UserCreateComponent {
   enteredName = '';
   enteredEmail = '';
-  @Output() userCreated = new EventEmitter();
+  @Output() userCreated = new EventEmitter<User>();
 
   onAddUser() {
-    const user = {
+    const user: User = {
       name: this.enteredName,
       email: this.enteredEmail
     };

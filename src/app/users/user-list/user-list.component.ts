@@ -1,4 +1,6 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input } from '@angular/core';
+
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-user-list',
@@ -6,6 +8,6 @@ import { Component, Input } from "@angular/core";
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent {
-  @Input() users = [];
+  @Input() users: User[] = [];
 
 }
