@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 import { User } from '../user.model';
 
@@ -12,10 +13,13 @@ export class UserCreateComponent {
   enteredEmail = '';
   @Output() userCreated = new EventEmitter<User>();
 
-  onAddUser() {
+  onAddUser(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
     const user: User = {
-      name: this.enteredName,
-      email: this.enteredEmail
+      name: form.value.name,
+      email: form.value.email
     };
     this.userCreated.emit(user);
   }
