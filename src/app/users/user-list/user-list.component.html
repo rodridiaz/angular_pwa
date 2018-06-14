@@ -1,0 +1,9 @@
+<mat-accordion multi="true" *ngIf="users.length > 0">
+  <mat-expansion-panel *ngFor="let user of users">
+    <mat-expansion-panel-header>
+      {{ user.name }}
+    </mat-expansion-panel-header>
+    {{ user.email }}
+  </mat-expansion-panel>
+</mat-accordion>
+<p class="info-text mat-body-1" *ngIf="users.length <= 0">No users added yet!</p>
