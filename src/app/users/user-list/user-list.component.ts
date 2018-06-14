@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 
 @Component({
   selector: 'app-user-list',
@@ -6,19 +6,6 @@ import { Component } from "@angular/core";
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent {
-  users = [
-    {
-      name: 'First User',
-      email: 'weeeeells@bluesmachine.com'
-    },
-    {
-      name: 'Second User',
-      email: 'weeeeells@bluesmachine.com'
-    },
-    {
-      name: 'Third User',
-      email: 'weeeeells@bluesmachine.com'
-    }
-  ];
+  @Input() users = [];
 
 }

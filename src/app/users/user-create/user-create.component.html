@@ -1,6 +1,9 @@
 <mat-card>
   <mat-form-field class="mat-form-field">
-    <input matInput class="input" type="text" [(ngModel)]="name">
+    <input matInput class="input" type="text" placeholder="Name" [(ngModel)]="enteredName">
+  </mat-form-field>
+  <mat-form-field class="mat-form-field">
+    <input matInput class="input" type="text" placeholder="Email" [(ngModel)]="enteredEmail">
   </mat-form-field>
   <button
     mat-raised-button
