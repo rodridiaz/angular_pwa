@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { User } from '../user.model';
+import { UserService } from '../users.service';
 
 @Component({
   selector: 'app-user-create',
@@ -11,17 +11,14 @@ import { User } from '../user.model';
 export class UserCreateComponent {
   enteredName = '';
   enteredEmail = '';
-  @Output() userCreated = new EventEmitter<User>();
+
+  constructor(public usersService: UserService) {}
 
   onAddUser(form: NgForm) {
     if (form.invalid) {
       return;
     }
-    const user: User = {
-      name: form.value.name,
-      email: form.value.email
-    };
-    this.userCreated.emit(user);
+    this.usersService.addUser(form.value.name, form.value.email);
   }
 
 }
