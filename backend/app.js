@@ -35,26 +35,16 @@ app.post('/api/users', (req, res, next) => {
     name: req.body.name,
     email: req.body.email
   });
-  user.save();
-  console.log(user);
-  res.status(201).json({
-    message: 'User added successfully'
+  user.save().then(createdUser => {
+    res.status(201).json({
+      message: 'User added successfully',
+      userId: createdUser._id
+    });
   });
+  console.log(user);
 })
 
 app.get('/api/users', (req, res, next) => {
-  const users = [
-    {
-      id: 'sad213asd324',
-      name: 'test name',
-      email: 'asdsad@asdsadf.com'
-    },
-    {
-      id: 'sdfsdf687s6d',
-      name: 'test name 2',
-      email: 'asdsad@asdsadf.com'
-    }
-  ];
   User.find()
     .then(documents => {
       res.status(200).json({
