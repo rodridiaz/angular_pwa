@@ -19,6 +19,7 @@ export class UserCreateComponent {
       return;
     }
     this.usersService.addUser(form.value.name, form.value.email);
+    form.resetForm();
   }
 
 }
