@@ -1,9 +1,18 @@
 const express = require('express');
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const User = require('./models/user');
 
 const app = express();
+
+mongoose.connect('mongodb://localhost:27017/users')
+  .then(() => {
+    console.log('Connected to database!');
+  })
+  .catch(() => {
+    console.log('Connection failed!');
+  });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,6 +35,7 @@ app.post('/api/users', (req, res, next) => {
     name: req.body.name,
     email: req.body.email
   });
+  user.save();
   console.log(user);
   res.status(201).json({
     message: 'User added successfully'
