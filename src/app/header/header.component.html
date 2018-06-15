@@ -1,1 +1,11 @@
-<mat-toolbar color="primary">My Users</mat-toolbar>
+<mat-toolbar color="primary">
+  <span>
+    <a routerLink="/">My Users</a>
+  </span>
+  <span class="spacer"></span>
+  <ul class="menu-link-list">
+    <li>
+      <a mat-button routerLink="/create" routerLinkActive="mat-accent">New User</a>
+    </li>
+  </ul>
+</mat-toolbar>

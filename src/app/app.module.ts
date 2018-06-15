@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { UserCreateComponent } from './users/user-create/user-create.component';
 import { HeaderComponent } from './header/header.component';
 import { UserListComponent } from './users/user-list/user-list.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { UserListComponent } from './users/user-list/user-list.component';
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
     MatInputModule,
@@ -32,7 +34,7 @@ import { UserListComponent } from './users/user-list/user-list.component';
     MatButtonModule,
     MatToolbarModule,
     MatExpansionModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
