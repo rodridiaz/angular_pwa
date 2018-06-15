@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 
+const User = require('./models/user');
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -20,7 +22,10 @@ app.use((req, res, next) => {
 });
 
 app.post('/api/users', (req, res, next) => {
-  const user = req.body;
+  const user = new User({
+    name: req.body.name,
+    email: req.body.email
+  });
   console.log(user);
   res.status(201).json({
     message: 'User added successfully'
