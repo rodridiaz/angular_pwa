@@ -55,10 +55,13 @@ app.get('/api/users', (req, res, next) => {
       email: 'asdsad@asdsadf.com'
     }
   ];
-  res.status(200).json({
-    message: 'Users fetched succesfully!',
-    users: users
-  });
+  User.find()
+    .then(documents => {
+      res.status(200).json({
+        message: 'Users fetched succesfully!',
+        users: documents
+      });
+    });
 });
 
 module.exports = app;
