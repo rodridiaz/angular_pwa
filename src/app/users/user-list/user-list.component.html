@@ -1,0 +1,13 @@
+<mat-accordion multi="true" *ngIf="users.length > 0">
+  <mat-expansion-panel *ngFor="let user of users">
+    <mat-expansion-panel-header>
+      {{ user.name }}
+    </mat-expansion-panel-header>
+    <p>{{ user.email }}</p>
+    <mat-action-row>
+      <button mat-button color="primary">EDIT</button>
+      <button mat-button color="warn">DELETE</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<p class="info-text mat-body-1" *ngIf="users.length <= 0">No users added yet!</p>

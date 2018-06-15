@@ -1,0 +1,8 @@
+:host {
+  display: block;
+}
+
+.mat-form-field,
+.input{
+  width: 100%;
+}
