@@ -64,4 +64,11 @@ app.get('/api/users', (req, res, next) => {
     });
 });
 
+app.delete('/api/users/:id', (req, res, next) => {
+  User.deleteOne({ _id: req.params.id }).then(result => {
+    console.log(result);
+    res.status(200).json({ message: 'User deleted successfully' });
+  })
+})
+
 module.exports = app;

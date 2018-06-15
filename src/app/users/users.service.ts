@@ -48,4 +48,13 @@ export class UserService {
         this.usersUpdated.next([...this.users]);
       });
   }
+
+  deleteUser(userId: string) {
+    this.http.delete('http://localhost:3000/api/users/' + userId)
+      .subscribe(() => {
+        const updatedUsers = this.users.filter(user => user.id !== userId);
+        this.users = updatedUsers;
+        this.usersUpdated.next([...this.users]);
+      });
+  }
 }

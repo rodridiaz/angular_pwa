@@ -25,6 +25,10 @@ export class UserListComponent implements OnInit, OnDestroy {
       });
   }
 
+  onDelete(userId: string) {
+    this.usersService.deleteUser(userId);
+  }
+
   ngOnDestroy() {
     this.usersSub.unsubscribe();
   }
