@@ -1,12 +1,12 @@
 <mat-card>
-  <form (submit)="onAddUser(userForm)" #userForm="ngForm">
+  <form (submit)="onSaveUser(userForm)" #userForm="ngForm">
     <mat-form-field class="mat-form-field">
       <input
         matInput
         class="input"
         type="text"
         placeholder="User Name"
-        ngModel
+        [ngModel]="user?.name"
         name="name"
         #name="ngModel"
         required>
@@ -20,7 +20,7 @@
       class="input"
       type="text"
       placeholder="User Email"
-      ngModel
+      [ngModel]="user?.email"
       name="email"
       #email="ngModel"
       required>

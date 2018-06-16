@@ -36,6 +36,12 @@ export class UserService {
     return this.usersUpdated.asObservable();
   }
 
+  getUser(id: string) {
+    return this.http.get<{ _id: string, name: string, email: string }>(
+      'http://localhost:3000/api/users/' + id
+    );
+  }
+
   addUser(name: string, email: string) {
     const user: User = {id: null, name: name, email: email};
     this.http
@@ -46,6 +52,18 @@ export class UserService {
         const id = responseData.userId;
         user.id = id;
         this.users.push(user);
+        this.usersUpdated.next([...this.users]);
+      });
+  }
+
+  updateUser(id: string, name: string, email: string) {
+    const user: User = { id: id, name: name, email: email };
+    this.http.put('http://localhost:3000/api/users/' + id, user)
+      .subscribe(response => {
+        const updatedUsers = [...this.users];
+        const oldUserIndex = updatedUsers.findIndex(u => u.id === id);
+        updatedUsers[oldUserIndex] = user;
+        this.users = updatedUsers;
         this.usersUpdated.next([...this.users]);
       });
   }

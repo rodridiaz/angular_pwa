@@ -25,7 +25,7 @@ app.use((req, res, next) => {
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, PATCH, DELETE, OPTIONS"
+    "GET, POST, PATCH, PUT, DELETE, OPTIONS"
   );
   next();
 });
@@ -42,7 +42,18 @@ app.post('/api/users', (req, res, next) => {
     });
   });
   console.log(user);
-})
+});
+
+app.put('/api/users/:id', (req, res, next) => {
+  const user = new User({
+    _id : req.body.id,
+    name: req.body.name,
+    email: req.body.email
+  });
+  User.updateOne({ _id: req.params.id }, user).then(result => {
+    res.status(200).json({ message: 'Update successful!' })
+  });
+});
 
 app.get('/api/users', (req, res, next) => {
   User.find()
@@ -54,9 +65,18 @@ app.get('/api/users', (req, res, next) => {
     });
 });
 
+app.get('/api/users/:id', (req, res, next) => {
+  User.findById(req.params.id).then(user => {
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ message: 'user not found' });
+    }
+  })
+})
+
 app.delete('/api/users/:id', (req, res, next) => {
   User.deleteOne({ _id: req.params.id }).then(result => {
-    console.log(result);
     res.status(200).json({ message: 'User deleted successfully' });
   })
 })
