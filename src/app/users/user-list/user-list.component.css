@@ -10,3 +10,19 @@
 .spinner {
   margin: auto;
 }
+
+.avatar {
+  width: 100%;
+  width: 35px;
+  min-width: 35px;
+  height: 35px;
+  line-height: 35px;
+  margin: 0 8px 0 0;
+  border-radius: 50%;
+  text-align: center;
+  margin: auto 0;
+}
+
+.user-name {
+  margin-left: 8px;
+}

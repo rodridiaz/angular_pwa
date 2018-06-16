@@ -15,11 +15,22 @@ input[type="file"] {
   visibility: hidden;
 }
 
+.upload-btn {
+  margin-bottom: 1rem;
+}
+
 .image-preview {
-  height: 5rem;
+  height: 3rem;
   margin: 1rem 0;
 }
 
 .image-preview img{
-  height: 100%;
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  line-height: 40px;
+  margin: 0 8px 0 0;
+  border-radius: 50%;
+  text-align: center;
+  margin: auto 0;
 }
