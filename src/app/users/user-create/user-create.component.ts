@@ -14,6 +14,7 @@ export class UserCreateComponent implements OnInit {
   enteredName = '';
   enteredEmail = '';
   user: User;
+  isLoading = false;
   private mode = 'create';
   private userId: string;
 
@@ -24,7 +25,9 @@ export class UserCreateComponent implements OnInit {
       if (paramMap.has('userId')) {
         this.mode = 'edit';
         this.userId = paramMap.get('userId');
+        this.isLoading = true;
         this.usersService.getUser(this.userId).subscribe(userData => {
+          this.isLoading = false;
           this.user = { id: userData._id, name: userData.name, email: userData.email };
         });
       } else {
@@ -38,6 +41,7 @@ export class UserCreateComponent implements OnInit {
     if (form.invalid) {
       return;
     }
+    this.isLoading = true;
     if (this.mode === 'create') {
       this.usersService.addUser(form.value.name, form.value.email);
     } else {

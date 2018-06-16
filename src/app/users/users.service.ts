@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 import { User } from './user.model';
@@ -10,7 +11,7 @@ export class UserService {
   private users: User[] = [];
   private usersUpdated = new Subject<User[]>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getUsers() {
     this.http
@@ -53,6 +54,7 @@ export class UserService {
         user.id = id;
         this.users.push(user);
         this.usersUpdated.next([...this.users]);
+        this.router.navigate(['/']);
       });
   }
 
@@ -65,6 +67,7 @@ export class UserService {
         updatedUsers[oldUserIndex] = user;
         this.users = updatedUsers;
         this.usersUpdated.next([...this.users]);
+        this.router.navigate(['/']);
       });
   }
 
