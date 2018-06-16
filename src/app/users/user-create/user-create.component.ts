@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { UserService } from '../users.service';
@@ -16,6 +16,7 @@ export class UserCreateComponent implements OnInit {
   user: User;
   isLoading = false;
   form: FormGroup;
+  imagePreview: string;
   private mode = 'create';
   private userId: string;
 
@@ -61,6 +62,11 @@ export class UserCreateComponent implements OnInit {
     const file = (event.target as HTMLInputElement).files[0];
     this.form.patchValue({image: file});
     this.form.get('image').updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result;
+    };
+    reader.readAsDataURL(file);
   }
 
   onSaveUser() {
