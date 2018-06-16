@@ -25,7 +25,7 @@ export class UserCreateComponent implements OnInit {
         this.mode = 'edit';
         this.userId = paramMap.get('userId');
         this.usersService.getUser(this.userId).subscribe(userData => {
-          this.user = { id: userData._id, name: userData.name, email: userData.email }
+          this.user = { id: userData._id, name: userData.name, email: userData.email };
         });
       } else {
         this.mode = 'create';
