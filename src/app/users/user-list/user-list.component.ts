@@ -11,6 +11,7 @@ import { UserService } from '../users.service';
 })
 export class UserListComponent implements OnInit, OnDestroy {
   users: User[] = [];
+  isLoading = false;
   private usersSub: Subscription;
 
   // The public keyword will automatically create a new property in
@@ -18,11 +19,17 @@ export class UserListComponent implements OnInit, OnDestroy {
   constructor(public usersService: UserService) {}
 
   ngOnInit() {
-    this.users = this.usersService.getUsers();
+    this.isLoading = true;
+    this.usersService.getUsers();
     this.usersSub = this.usersService.getUserUpdateListener()
       .subscribe((users: User[]) => {
+        this.isLoading = true;
         this.users = users;
       });
+  }
+
+  onDelete(userId: string) {
+    this.usersService.deleteUser(userId);
   }
 
   ngOnDestroy() {

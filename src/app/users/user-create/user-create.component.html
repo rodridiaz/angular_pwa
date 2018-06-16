@@ -1,12 +1,13 @@
 <mat-card>
-  <form (submit)="onAddUser(userForm)" #userForm="ngForm">
+  <mat-spinner class="spinner" *ngIf="isLoading"></mat-spinner>
+  <form (submit)="onSaveUser(userForm)" #userForm="ngForm" *ngIf="!isLoading">
     <mat-form-field class="mat-form-field">
       <input
         matInput
         class="input"
         type="text"
         placeholder="User Name"
-        ngModel
+        [ngModel]="user?.name"
         name="name"
         #name="ngModel"
         required>
@@ -20,7 +21,7 @@
       class="input"
       type="text"
       placeholder="User Email"
-      ngModel
+      [ngModel]="user?.email"
       name="email"
       #email="ngModel"
       required>
