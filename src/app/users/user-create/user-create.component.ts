@@ -47,11 +47,12 @@ export class UserCreateComponent implements OnInit {
             id: userData._id,
             name: userData.name,
             email: userData.email,
-            imagePath: null
+            imagePath: userData.imagePath
           };
           this.form.setValue({
-            'name': this.user.name,
-            'email': this.user.email,
+            name: this.user.name,
+            email: this.user.email,
+            image: this.user.imagePath
           });
         });
       } else {
@@ -80,7 +81,7 @@ export class UserCreateComponent implements OnInit {
     if (this.mode === 'create') {
       this.usersService.addUser(this.form.value.name, this.form.value.email, this.form.value.image);
     } else {
-      this.usersService.updateUser(this.userId, this.form.value.name, this.form.value.email);
+      this.usersService.updateUser(this.userId, this.form.value.name, this.form.value.email, this.form.value.image);
     }
     this.form.reset();
   }

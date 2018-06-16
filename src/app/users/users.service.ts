@@ -39,7 +39,7 @@ export class UserService {
   }
 
   getUser(id: string) {
-    return this.http.get<{ _id: string, name: string, email: string }>(
+    return this.http.get<{ _id: string, name: string, email: string, imagePath: string }>(
       'http://localhost:3000/api/users/' + id
     );
   }
@@ -66,12 +66,32 @@ export class UserService {
       });
   }
 
-  updateUser(id: string, name: string, email: string) {
-    const user: User = { id: id, name: name, email: email, imagePath: null };
-    this.http.put('http://localhost:3000/api/users/' + id, user)
+  updateUser(id: string, name: string, email: string, image: File | string) {
+    let userData: User | FormData;
+    if (typeof(image) === 'object') {
+      userData = new FormData();
+      userData.append('id', id);
+      userData.append('name', name);
+      userData.append('email', email);
+      userData.append('image', image, name);
+    } else {
+      userData = {
+        id: id,
+        name: name,
+        email: email,
+        imagePath: image
+      };
+    }
+    this.http.put('http://localhost:3000/api/users/' + id, userData)
       .subscribe(response => {
         const updatedUsers = [...this.users];
         const oldUserIndex = updatedUsers.findIndex(u => u.id === id);
+        const user: User = {
+          id: id,
+          name: name,
+          email: email,
+          imagePath: ''
+        };
         updatedUsers[oldUserIndex] = user;
         this.users = updatedUsers;
         this.usersUpdated.next([...this.users]);
