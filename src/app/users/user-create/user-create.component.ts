@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { UserService } from '../users.service';
 import { User } from '../user.model';
+import { mimeType } from './mime-type.validator';
 
 @Component({
   selector: 'app-user-create',
@@ -15,12 +16,26 @@ export class UserCreateComponent implements OnInit {
   enteredEmail = '';
   user: User;
   isLoading = false;
+  form: FormGroup;
+  imagePreview: string;
   private mode = 'create';
   private userId: string;
 
   constructor(public usersService: UserService, public route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.form = new FormGroup({
+      'name': new FormControl(null, {
+        validators: [Validators.required]
+      }),
+      'email': new FormControl(null, {
+        validators: [Validators.required]
+      }),
+      'image': new FormControl(null, {
+        validators: [Validators.required],
+        asyncValidators: [mimeType]
+      })
+    });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('userId')) {
         this.mode = 'edit';
@@ -28,7 +43,17 @@ export class UserCreateComponent implements OnInit {
         this.isLoading = true;
         this.usersService.getUser(this.userId).subscribe(userData => {
           this.isLoading = false;
-          this.user = { id: userData._id, name: userData.name, email: userData.email };
+          this.user = {
+            id: userData._id,
+            name: userData.name,
+            email: userData.email,
+            imagePath: userData.imagePath
+          };
+          this.form.setValue({
+            name: this.user.name,
+            email: this.user.email,
+            image: this.user.imagePath
+          });
         });
       } else {
         this.mode = 'create';
@@ -37,17 +62,28 @@ export class UserCreateComponent implements OnInit {
     });
   }
 
-  onSaveUser(form: NgForm) {
-    if (form.invalid) {
+  onImagePicked(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({image: file});
+    this.form.get('image').updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  onSaveUser() {
+    if (this.form.invalid) {
       return;
     }
     this.isLoading = true;
     if (this.mode === 'create') {
-      this.usersService.addUser(form.value.name, form.value.email);
+      this.usersService.addUser(this.form.value.name, this.form.value.email, this.form.value.image);
     } else {
-      this.usersService.updateUser(this.userId, form.value.name, form.value.email);
+      this.usersService.updateUser(this.userId, this.form.value.name, this.form.value.email, this.form.value.image);
     }
-    form.resetForm();
+    this.form.reset();
   }
 
 }

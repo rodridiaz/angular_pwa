@@ -2,7 +2,8 @@
 <mat-accordion multi="true" *ngIf="users.length > 0 && !isLoading">
   <mat-expansion-panel *ngFor="let user of users">
     <mat-expansion-panel-header>
-      {{ user.name }}
+      <img class="avatar" [src]="user.imagePath" [alt]="user.name">
+      <p class="user-name">{{ user.name }}</p>
     </mat-expansion-panel-header>
     <p>{{ user.email }}</p>
     <mat-action-row>

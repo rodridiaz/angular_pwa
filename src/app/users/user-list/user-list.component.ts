@@ -23,7 +23,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.usersService.getUsers();
     this.usersSub = this.usersService.getUserUpdateListener()
       .subscribe((users: User[]) => {
-        this.isLoading = true;
+        this.isLoading = false;
         this.users = users;
       });
   }
