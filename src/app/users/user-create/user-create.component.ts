@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { UserService } from '../users.service';
 import { User } from '../user.model';
+import { mimeType } from './mime-type.validator';
 
 @Component({
   selector: 'app-user-create',
@@ -31,7 +32,8 @@ export class UserCreateComponent implements OnInit {
         validators: [Validators.required]
       }),
       'image': new FormControl(null, {
-        validators: [Validators.required]
+        validators: [Validators.required],
+        asyncValidators: [mimeType]
       })
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
