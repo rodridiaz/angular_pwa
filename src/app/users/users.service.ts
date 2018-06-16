@@ -23,7 +23,8 @@ export class UserService {
           return {
             name: user.name,
             email: user.email,
-            id: user._id
+            id: user._id,
+            imagePath: user.imagePath
           };
         });
       }))
@@ -43,15 +44,22 @@ export class UserService {
     );
   }
 
-  addUser(name: string, email: string) {
-    const user: User = {id: null, name: name, email: email};
+  addUser(name: string, email: string, image: File) {
+    const userData = new FormData();
+    userData.append('name', name);
+    userData.append('email', email);
+    userData.append('image', image, name);
     this.http
-      .post<{ message: string, userId: string }>(
-        'http://localhost:3000/api/users', user
+      .post<{ message: string, user: User }>(
+        'http://localhost:3000/api/users', userData
       )
       .subscribe((responseData) => {
-        const id = responseData.userId;
-        user.id = id;
+        const user: User = {
+          id: responseData.user.id,
+          name: name,
+          email: email,
+          imagePath: responseData.user.imagePath
+        };
         this.users.push(user);
         this.usersUpdated.next([...this.users]);
         this.router.navigate(['/']);
@@ -59,7 +67,7 @@ export class UserService {
   }
 
   updateUser(id: string, name: string, email: string) {
-    const user: User = { id: id, name: name, email: email };
+    const user: User = { id: id, name: name, email: email, imagePath: null };
     this.http.put('http://localhost:3000/api/users/' + id, user)
       .subscribe(response => {
         const updatedUsers = [...this.users];

@@ -46,7 +46,8 @@ export class UserCreateComponent implements OnInit {
           this.user = {
             id: userData._id,
             name: userData.name,
-            email: userData.email
+            email: userData.email,
+            imagePath: null
           };
           this.form.setValue({
             'name': this.user.name,
@@ -77,7 +78,7 @@ export class UserCreateComponent implements OnInit {
     }
     this.isLoading = true;
     if (this.mode === 'create') {
-      this.usersService.addUser(this.form.value.name, this.form.value.email);
+      this.usersService.addUser(this.form.value.name, this.form.value.email, this.form.value.image);
     } else {
       this.usersService.updateUser(this.userId, this.form.value.name, this.form.value.email);
     }
