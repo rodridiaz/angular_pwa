@@ -44,8 +44,40 @@ workbox.routing.registerRoute(
   workbox.strategies.networkFirst()
 )
 
+// API with network-first strategy
+workbox.routing.registerRoute(
+  /(http[s]?:\/\/)?([^\/\s]+\/)(users\/)([^\/\s]+)/,
+  workbox.strategies.networkFirst()
+)
+
+// API with network-first strategy
+workbox.routing.registerRoute(
+  /(http[s]?:\/\/)?([^\/\s]+\/)create/,
+  workbox.strategies.networkFirst()
+)
+
+// API with network-first strategy
+workbox.routing.registerRoute(
+  /(http[s]?:\/\/)?([^\/\s]+\/)(edit\/)([^\/\s]+)/,
+  workbox.strategies.networkFirst()
+)
+
 // PUSH NOTIFICATIONS
 
 // BACKGROUND SYNC
+
+// Registering a route for retries
+workbox.routing.registerRoute(
+  /(http[s]?:\/\/)?([^\/\s]+\/)(api\/)users/,
+  workbox.strategies.networkOnly({
+    plugins: [
+      new workbox.backgroundSync.Plugin('usersQueue', {
+        maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
+      })
+    ]
+  }),
+  window.location.replace('/'),
+  'POST'
+)
 
 // GOOGLE ANALYTICS
