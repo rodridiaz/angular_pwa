@@ -76,7 +76,6 @@ workbox.routing.registerRoute(
       })
     ]
   }),
-  window.location.replace('/'),
   'POST'
 )
 
