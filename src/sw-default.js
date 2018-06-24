@@ -67,6 +67,19 @@ workbox.routing.registerRoute(
 // BACKGROUND SYNC
 
 const bgSyncPlugin = new workbox.backgroundSync.Plugin('usersQueue', {
+  callbacks: {
+    queueDidReplay: (data) => {
+      if (data && data.length > 0 && !data[0].error) {
+        self.registration.showNotification('WTC Exercise', {
+          body: getMessageToShow(data),
+          icon: '/assets/favicon/android-chrome-192x192.png',
+          vibrate: [200, 100, 200, 100, 200, 100, 200],
+          tag: 'background-sync',
+          requireInteraction: true
+        })
+      }
+    }
+  },
   maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
 })
 
@@ -96,5 +109,42 @@ workbox.routing.registerRoute(
   }),
   'DELETE'
 )
+
+// Build message to show into notification
+function getMessageToShow(data) {
+  const msgArray = data.map(ele => {
+      return ele.request.method
+  });
+  const usedMethods = getWordCnt(msgArray);
+  const msg = getMessageFromMethodList(usedMethods);
+  return msg;
+}
+
+function getWordCnt(wordsArray) {
+  let result = [];
+  if (wordsArray instanceof Array) {
+    result = wordsArray.reduce((prev, next) => {
+        prev[next.toLowerCase()] = (prev[next] + 1) || 1;
+        return prev;
+    },{});
+  }
+  return result;
+}
+
+function getMessageFromMethodList(msgs) {
+  let message = 'The following request was sent to the server: \n';
+  if (msgs.put > 0) {
+    message += msgs.put > 1 ? `${msgs.put} updated users\n` : `1 updated user\n`
+  }
+  if (msgs.post > 0) {
+    message += msgs.post > 1 ? `${msgs.post} inserted users\n` : `1 inserted user\n`
+  }
+  if (msgs.delete > 0) {
+    message += msgs.delete > 1 ? `${msgs.delete} deleted users` : `1 deleted user`
+  }
+  message += `\n\n Reload the page`
+  return message;
+}
+
 
 // GOOGLE ANALYTICS
