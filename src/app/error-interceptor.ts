@@ -8,12 +8,13 @@ import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar, private router: Router) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const method = req.method;
@@ -23,15 +24,14 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (error.error.message) {
           errorMessage = error.error.message;
         }
-        if (method === 'POST') {
+        if (['POST', 'PUT', 'DELETE'].includes(method)) {
           this.snackBar.open('User will be sent after you go online', null, {
             duration: 3000
           });
         } else {
-          this.snackBar.open(errorMessage, null, {
-            duration: 2000
-          });
+          console.log(errorMessage);
         }
+        this.router.navigate(['/']);
         return throwError(error);
       })
     );

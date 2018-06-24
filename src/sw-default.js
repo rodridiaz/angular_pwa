@@ -66,17 +66,35 @@ workbox.routing.registerRoute(
 
 // BACKGROUND SYNC
 
+const bgSyncPlugin = new workbox.backgroundSync.Plugin('usersQueue', {
+  maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
+})
+
 // Registering a route for retries
 workbox.routing.registerRoute(
   /(http[s]?:\/\/)?([^\/\s]+\/)(api\/)users/,
   workbox.strategies.networkOnly({
-    plugins: [
-      new workbox.backgroundSync.Plugin('usersQueue', {
-        maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
-      })
-    ]
+    plugins: [bgSyncPlugin]
   }),
   'POST'
+)
+
+// Registering a route for retries
+workbox.routing.registerRoute(
+  /(http[s]?:\/\/)?([^\/\s]+\/)(api\/)users/,
+  workbox.strategies.networkOnly({
+    plugins: [bgSyncPlugin]
+  }),
+  'PUT'
+)
+
+// Registering a route for retries
+workbox.routing.registerRoute(
+  /(http[s]?:\/\/)?([^\/\s]+\/)(api\/)users/,
+  workbox.strategies.networkOnly({
+    plugins: [bgSyncPlugin]
+  }),
+  'DELETE'
 )
 
 // GOOGLE ANALYTICS
