@@ -10,7 +10,7 @@
     "e2e": "ng e2e",
     "start:server": "nodemon server.js",
     "workbox-build-inject": "node workbox-build-inject.js",
-    "build-full-workbox": "ng build --prod && npm run workbox-build-inject && workbox copyLibraries dist",
+    "build-full-workbox": "rimraf dist && ng build --prod && npm run workbox-build-inject && workbox copyLibraries dist",
     "build-full-workbox-default": "ng build --prod && workbox generateSW"
   },
   "private": true,
@@ -55,6 +55,7 @@
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
     "typescript": "~2.7.2",
-    "workbox-build": "^3.0.0"
+    "workbox-build": "^3.0.0",
+    "workbox-cli": "^3.0.0"
   }
 }

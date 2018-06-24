@@ -113,7 +113,7 @@ workbox.routing.registerRoute(
 // Build message to show into notification
 function getMessageToShow(data) {
   const msgArray = data.map(ele => {
-      return ele.request.method
+      return ele.request.method.toLowerCase();
   });
   const usedMethods = getWordCnt(msgArray);
   const msg = getMessageFromMethodList(usedMethods);
@@ -124,7 +124,7 @@ function getWordCnt(wordsArray) {
   let result = [];
   if (wordsArray instanceof Array) {
     result = wordsArray.reduce((prev, next) => {
-        prev[next.toLowerCase()] = (prev[next] + 1) || 1;
+        prev[next] = (prev[next] + 1) || 1;
         return prev;
     },{});
   }
@@ -132,7 +132,7 @@ function getWordCnt(wordsArray) {
 }
 
 function getMessageFromMethodList(msgs) {
-  let message = 'The following request was sent to the server: \n';
+  let message = 'Synchronized requests on the server: \n';
   if (msgs.put > 0) {
     message += msgs.put > 1 ? `${msgs.put} updated users\n` : `1 updated user\n`
   }
@@ -142,7 +142,7 @@ function getMessageFromMethodList(msgs) {
   if (msgs.delete > 0) {
     message += msgs.delete > 1 ? `${msgs.delete} deleted users` : `1 deleted user`
   }
-  message += `\n\n Reload the page`
+  message += `\nPlease, reload the page`
   return message;
 }
 
