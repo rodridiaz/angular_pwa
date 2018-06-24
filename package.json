@@ -10,7 +10,7 @@
     "e2e": "ng e2e",
     "start:server": "nodemon server.js",
     "workbox-build-inject": "node workbox-build-inject.js",
-    "build-full-workbox": "ng build --prod && npm run workbox-build-inject",
+    "build-full-workbox": "ng build --prod && npm run workbox-build-inject && workbox copyLibraries dist",
     "build-full-workbox-default": "ng build --prod && workbox generateSW"
   },
   "private": true,
