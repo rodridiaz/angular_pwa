@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 import { User } from './user.model';
+import { environment } from '../../environments/environment';
+
+const BACKEND_URL = environment.apiUrl;
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -16,7 +19,7 @@ export class UserService {
   getUsers() {
     this.http
       .get<{ message: string, users: any[] }>(
-        'http://localhost:3000/api/users'
+        BACKEND_URL + '/users'
       )
       .pipe(map((userData) => {
         return userData.users.map(user => {
@@ -40,7 +43,7 @@ export class UserService {
 
   getUser(id: string) {
     return this.http.get<{ _id: string, name: string, email: string, imagePath: string }>(
-      'http://localhost:3000/api/users/' + id
+      BACKEND_URL + '/users/' + id
     );
   }
 
@@ -51,7 +54,7 @@ export class UserService {
     userData.append('image', image, name);
     this.http
       .post<{ message: string, user: User }>(
-        'http://localhost:3000/api/users', userData
+        BACKEND_URL + '/users', userData
       )
       .subscribe((responseData) => {
         const user: User = {
@@ -82,7 +85,7 @@ export class UserService {
         imagePath: image
       };
     }
-    this.http.put('http://localhost:3000/api/users/' + id, userData)
+    this.http.put(BACKEND_URL + '/users/' + id, userData)
       .subscribe(response => {
         const updatedUsers = [...this.users];
         const oldUserIndex = updatedUsers.findIndex(u => u.id === id);
@@ -100,7 +103,7 @@ export class UserService {
   }
 
   deleteUser(userId: string) {
-    this.http.delete('http://localhost:3000/api/users/' + userId)
+    this.http.delete(BACKEND_URL + '/users/' + userId)
       .subscribe(() => {
         const updatedUsers = this.users.filter(user => user.id !== userId);
         this.users = updatedUsers;

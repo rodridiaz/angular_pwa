@@ -25,13 +25,13 @@ export class UserCreateComponent implements OnInit {
 
   ngOnInit() {
     this.form = new FormGroup({
-      'name': new FormControl(null, {
+      name: new FormControl(null, {
         validators: [Validators.required]
       }),
-      'email': new FormControl(null, {
+      email: new FormControl(null, {
         validators: [Validators.required]
       }),
-      'image': new FormControl(null, {
+      image: new FormControl(null, {
         validators: [Validators.required],
         asyncValidators: [mimeType]
       })
