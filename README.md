@@ -66,16 +66,12 @@ After responding, another fetch is fired off to check if the response has change
 
 
 ## Adding to the home screen
-Set the following flags in your chrome profile via `chrome://flags`:
-
-`chrome://flags/#bypass-app-banner-engagement-checks`
-
-`chrome://flags/#enable-app-banners`
-
-
-These will ensure that the A2HS banner appears immediately instead of waiting for 5 minutes, and enables the feature on desktop for testing.
-Checking you've configured Chrome correctly:
-Visit airhorner.com and click ‘install’, checking that the A2HS prompt appears
+1. Set the following flags in your chrome profile via `chrome://flags`:
+    - `chrome://flags/#bypass-app-banner-engagement-checks`
+    - `chrome://flags/#enable-app-banners`
+2. These will ensure that the A2HS banner appears immediately instead of waiting for 5 minutes, and enables the feature on desktop for testing.
+3. Checking you've configured Chrome correctly. Visit airhorner.com and click ‘install’, checking that the A2HS prompt appears
+4. If there is still no prompt, just click “Add to homescreen” link in DevTools -> Application -> Manifest section
 
 
 ## Workbox Background Sync
