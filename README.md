@@ -1,5 +1,5 @@
 # Background
-Angular simple PWA to store user contacts built on top of MongoDB, Express, Angular, and Node.js. A quick, mobile-first app for manage contacts information, with native-like ease of use & offline availability. App attributes:
+A simple PWA to store user contacts built on top of MongoDB, Express, Angular, and Node.js. A quick, mobile-first app for manage contacts information, with native-like ease of use & offline availability. App attributes:
 * Installable to the user’s home screen
 * Able to start in offline mode
 * In offline mode, show dynamic content from cache
